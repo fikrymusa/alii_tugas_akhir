@@ -14,26 +14,44 @@ Sistem berbasis kecerdasan buatan (AI) yang dirancang untuk membantu ekstraksi i
 
 ## 🛠️ Arsitektur & Teknologi
 
-### Frontend
+### Frontend (React.js)
 
-- **Framework**: React.js (Vite)
-- **Styling**: Vanilla CSS / Tailwind CSS
-- **State Management**: React Hooks / Context API
+- **React 18/19**: Library UI modern untuk membangun antarmuka yang reaktif.
+- **Vite**: Build tool super cepat untuk pengembangan frontend.
+- **Tailwind CSS**: Framework CSS berbasis utility untuk desain premium dan responsif.
+- **Axios**: Komunikasi data dengan API Backend.
 
-### Backend (Saran)
+### Backend (FastAPI)
 
-- **Language**: Python 3.x
-- **Framework**: FastAPI / Flask
-- **AI Framework**: LangChain / LlamaIndex
-- **Embeddings**: OpenAI / Gemini / HuggingFace
-- **Vector Store**: ChromaDB / FAISS / Pinecone
+- **FastAPI**: Framework Python berperforma tinggi untuk membangun API dengan dokumentasi Swagger terintegrasi.
+- **Uvicorn**: ASGI server untuk menjalankan aplikasi FastAPI.
+- **Pydantic**: Validasi data dan pengaturan skema API.
+
+### AI & Data Pipeline
+
+- **LangChain**: Framework utama untuk mengelola rantai logika LLM dan RAG.
+- **OpenAI / Gemini API**: Model bahasa (LLM) untuk pemrosesan konteks dan jawaban.
+- **Sentence Transformers**: Model embedding untuk mengubah teks menjadi vektor angka.
+- **ChromaDB / FAISS**: Vector store untuk penyimpanan dan pencarian data berbasis semantik.
+
+## 🧠 Konsep & Komponen RAG AI
+
+Sistem ini mengikuti alur **Retrieval-Augmented Generation** yang terdiri dari beberapa komponen kunci:
+
+1. **Document Loader**: Memuat file PDF dan mengekstrak teks mentah menggunakan library seperti `PyMuPDF` atau `LangChain PDF Loaders`.
+2. **Text Splitter (Chunking)**: Memecah teks besar menjadi potongan-potongan kecil (_chunks_) dengan _overlap_ tertentu agar konteks tetap terjaga.
+3. **Embedding Model**: Mengonversi setiap chunk teks menjadi vektor (array numerik) yang merepresentasikan makna semantik teks tersebut.
+4. **Vector Database**: Menyimpan vektor-vektor tersebut. Saat pengguna bertanya, sistem mencari chunk yang paling relevan secara semantik (Similarity Search).
+5. **Context Retrieval**: Mengambil chunk yang paling relevan untuk dijadikan referensi bagi AI.
+6. **Prompt Engineering**: Menggabungkan konteks yang ditemukan dengan pertanyaan pengguna ke dalam satu _template prompt_ yang instruktif.
+7. **LLM Generation**: Model AI (seperti GPT-4 atau Gemini) menghasilkan jawaban akhir berdasarkan konteks yang diberikan, bukan hanya dari pengetahuan internalnya.
 
 ## 📦 Instalasi
 
 ### 1. Prasyarat
 
 - Node.js & npm
-- Python 3.10+
+- Python 3.12+
 - AI API Key (OpenAI/Gemini)
 
 ### 2. Setup Frontend
