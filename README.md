@@ -16,6 +16,26 @@ Sistem berbasis kecerdasan buatan (AI) yang dirancang untuk membantu ekstraksi i
   - Meminimalisir halusinasi AI dengan referensi data nyata.
 - **Vector Database**: Penyimpanan cerdas (embeddings) untuk pencarian dokumen yang cepat dan akurat.
 
+## 🏗️ Arsitektur Sistem
+
+Sistem ini dibangun dengan arsitektur **Decoupled**, memisahkan antara UI (Frontend) dan pemrosesan AI (Backend).
+
+```mermaid
+graph TD
+    A[User/Client] -->|Upload PDF| B(React Frontend)
+    B -->|POST /upload| C(FastAPI Backend)
+    C -->|Extract & Chunk| D[Text Processing]
+    D -->|Generate Embeddings| E[Embedding Model]
+    E -->|Upsert| F[(Vector DB - ChromaDB)]
+    A -->|Pertanyaan| B
+    B -->|POST /chat| C
+    C -->|Semantic Search| F
+    F -->|Contextual Chunks| C
+    C -->|Prompt + Context| G[LLM - Gemini/OpenAI]
+    G -->|Streaming Response| C
+    C -->|Answer| B
+```
+
 ## 🛠️ Arsitektur & Teknologi
 
 ### Frontend (React.js)
@@ -49,6 +69,38 @@ Sistem ini mengikuti alur **Retrieval-Augmented Generation** yang terdiri dari b
 5. **Context Retrieval**: Mengambil chunk yang paling relevan untuk dijadikan referensi bagi AI.
 6. **Prompt Engineering**: Menggabungkan konteks yang ditemukan dengan pertanyaan pengguna ke dalam satu _template prompt_ yang instruktif.
 7. **LLM Generation**: Model AI (seperti GPT-4 atau Gemini) menghasilkan jawaban akhir berdasarkan konteks yang diberikan, bukan hanya dari pengetahuan internalnya.
+
+## 📡 API Endpoints (Technical Spec)
+
+### 1. Document Management
+
+- **`POST /api/v1/docs/upload`**
+  - **Payload**: `multipart/form-data` (file: .pdf)
+  - **Proses**: PDF -> Extract -> Chunk (Size: 1000, Overlap: 200) -> Embedding -> ChromaDB storage.
+  - **Response**: `201 Created` dengan `document_id`.
+
+- **`GET /api/v1/docs`**
+  - **Response**: List dokumen yang telah diproses.
+
+### 2. AI Interaction
+
+- **`POST /api/v1/chat`**
+  - **Payload**: `{ "query": "string", "session_id": "string", "document_id": "string" }`
+  - **Proses**: Vector search (Top-K: 4) -> Context Window -> LLM Call.
+  - **Response**: `{ "answer": "string", "sources": [...] }`
+
+## ⚙️ Konfigurasi Environment
+
+Buat file `.env` di folder `backend/`:
+
+```env
+OPENAI_API_KEY=your_openai_key_here
+# atau
+GOOGLE_API_KEY=your_gemini_key_here
+DATABASE_URL=sqlite:///./sql_app.db
+CHROMA_DB_PATH=./data/chromadb
+MODEL_NAME=gpt-4o-mini # atau gemini-1.5-flash
+```
 
 ## 📦 Instalasi
 
