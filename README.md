@@ -68,4 +68,4 @@ python main.py
 
 ---
 
-_Dibuat oleh [Nama Anda] untuk keperluan Tugas Akhir._
+ALII UIN Jakarta 2026
