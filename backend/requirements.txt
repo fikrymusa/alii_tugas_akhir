@@ -1,0 +1,25 @@
+# --- Framework & Server ---
+fastapi
+uvicorn[standard]
+python-multipart
+
+# --- Database ---
+sqlalchemy
+
+# --- Authentication & Security ---
+python-jose[cryptography]
+passlib[bcrypt]
+
+# --- Settings ---
+pydantic-settings
+
+# --- PDF & AI Processing (RAG) ---
+pypdf
+langchain
+langchain-community
+langchain-text-splitters
+sentence-transformers
+faiss-cpu
+
+# --- Google Gemini AI ---
+google-generativeai
