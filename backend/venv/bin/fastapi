@@ -1,4 +1,4 @@
-#!/home/faza/RAG-Tugas-Akhir/backend/venv/bin/python3
+#!/home/faza/alii_tugas_akhir/backend/venv/bin/python3.12
 # -*- coding: utf-8 -*-
 import re
 import sys

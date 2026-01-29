@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-// Buat instance axios
+// Buat instance axios agar tidak perlu ketik URL berulang-ulang
 const api = axios.create({
   baseURL: 'http://localhost:8000/api', // Perhatikan ada /api di sini
   headers: {
