@@ -1,4 +1,5 @@
 from pydantic_settings import BaseSettings
+import os # Tambahkan import os (opsional, tapi bagus untuk debug)
 
 class Settings(BaseSettings):
     PROJECT_NAME: str = "ThesisGuard AI"
@@ -8,15 +9,19 @@ class Settings(BaseSettings):
     DATABASE_URL: str = "sqlite:///./thesis_guard.db"
     
     # Keamanan
-    SECRET_KEY: str = "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7"
+    # (Di production nanti, SECRET_KEY juga sebaiknya dipindah ke .env)
+    SECRET_KEY: str
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24
 
-    # --- TAMBAHAN BARU ---
-    # Ganti tulisan di bawah dengan API Key yang Anda copy dari Google AI Studio
-    GEMINI_API_KEY: str = "AIzaSyBfF9s9O757zEvYyMRzqaFcLXilTKy-T2k" 
+    # --- PERBAIKAN DI SINI ---
+    # Jangan tulis key di sini! Cukup definisikan tipe datanya saja.
+    # Pydantic akan otomatis mencarinya di file .env
+    GEMINI_API_KEY: str 
 
     class Config:
         env_file = ".env"
+        # Tambahan agar dia membaca file .env meskipun huruf besar/kecil
+        case_sensitive = True 
 
 settings = Settings()
